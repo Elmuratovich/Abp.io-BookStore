@@ -1,4 +1,5 @@
-﻿using Acme.BookStore.Books;
+﻿using Acme.BookStore.Authors;
+using Acme.BookStore.Books;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +15,17 @@ namespace Acme.BookStore
         : IDataSeedContributor, ITransientDependency
     {
         private readonly IRepository<Book, Guid> _bookRepository;
+        private readonly IRepository<Author, Guid> _authorRepository;
+        private readonly AuthorManager _authorManager;
 
-        public BookStoreDataSeederContributor(IRepository<Book, Guid> bookRepository)
+        public BookStoreDataSeederContributor(
+            IRepository<Book, Guid> bookRepository,
+            IRepository<Author, Guid> authorRepository,
+            AuthorManager authorManager)
         {
             _bookRepository = bookRepository;
+            _authorRepository = authorRepository;
+            _authorManager = authorManager;
         }
         public async Task SeedAsync(DataSeedContext context)
         {
@@ -43,6 +51,25 @@ namespace Acme.BookStore
                         Price = 42.0f
                     },
                     autoSave: true
+                );
+            }
+
+            if(await _authorRepository.GetCountAsync() <= 0)
+            {
+                await _authorRepository.InsertAsync(
+                    await _authorManager.CreateAsync(
+                        "George Orwell",
+                        new DateTime(1903, 06, 25),
+                        "Orwell produced literary criticism and poetry, fiction and polemical journalism; and is best know ..."
+                    )
+                );
+
+                await _authorRepository.InsertAsync(
+                    await _authorManager.CreateAsync(
+                        "Douglas Adams",
+                        new DateTime(1952, 03, 11),
+                        "Douglas Adams was an English author, screenwriter, essayist, humorist, satirist and dramatist..."
+                    )
                 );
             }
         }

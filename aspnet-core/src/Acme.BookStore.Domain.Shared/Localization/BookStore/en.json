@@ -6,6 +6,7 @@
     "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io.",
     "Menu:BookStore": "BookStore",
     "Menu:Books": "Books",
+    "Menu:Authors": "Authors",
     "Action": "Actions",
     "Close": "Close",
     "Delete": "Delete",
@@ -33,6 +34,11 @@
     "Permission:Books.Edit": "Editing the books",
     "Permission:Books.Delete": "Deleting the books",
     "BookStore:00001": "There is already an author with the same name: {name}",
-    "SelectBookType": "Select a book type"
+    "SelectBookType": "Select a book type",
+    "Permission:Authors": "Authors Management",
+    "Permission:Authors.Create": "Creating new authors",
+    "Permission:Authors.Edit": "Editing the authors",
+    "Permission:Authors.Delete": "Deleting the authors",
+    "NewAuthor": "New author"
   }
 }
